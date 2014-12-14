@@ -1,0 +1,26 @@
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := end2
+
+JNI_MAIN := main.cpp
+END_CORE := $(wildcard $(LOCAL_PATH)/end2/src/main/**/*.cpp)
+END_CORE := $(END_CORE:$(LOCAL_PATH)/%=%)
+END_SCENEGRAPH := $(wildcard $(LOCAL_PATH)/end2/src/main/scenegraph/**/*.cpp)
+END_SCENEGRAPH := $(END_SCENEGRAPH:$(LOCAL_PATH)/%=%)
+END_MODULE_THIRDPARTY := $(wildcard $(LOCAL_PATH)/end2/src/main/modules/third_party/**/*.c*)
+END_MODULE_THIRDPARTY := $(END_MODULE_THIRDPARTY:$(LOCAL_PATH)/%=%)
+
+LOCAL_SRC_FILES := $(JNI_MAIN)
+LOCAL_SRC_FILES += $(END_CORE)
+LOCAL_SRC_FILES += $(END_SCENEGRAPH)
+LOCAL_SRC_FILES += $(END_MODULE_THIRDPARTY)
+
+LOCAL_LDLIBS := -llog
+LOCAL_LDLIBS += -lGLESv1_CM
+LOCAL_LDLIBS += -lGLESv2
+
+LOCAL_DISABLE_FORMAT_STRING_CHECKS := true
+
+include $(BUILD_SHARED_LIBRARY)
